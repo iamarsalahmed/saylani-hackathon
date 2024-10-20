@@ -91,7 +91,7 @@ import { auth, signOut, db, collection, getDocs } from '../(database)/firebase-c
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
 import TeamCard from '../createTeam/teamCard';
-
+import './styles.css'
 const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [teams, setTeams] = useState([]); // State to store teams
@@ -171,12 +171,31 @@ const Dashboard = () => {
     router.push('/createTeam');
   };
 
+  // return (
+  //   <div className="dashboard">
+  //     <h1>Welcome to your Dashboard, {user?.email}</h1>
+  //     <button onClick={handleSignOut}>Sign Out</button>
+  //     <button onClick={handleCreateTeam}>Create Team</button>
+
+  //     <div className="team-cards-container">
+  //       {teams.length > 0 ? (
+  //         teams.map((team) => (
+  //           <TeamCard key={team.id} team={team} userId={user.uid} onDelete={handleDeleteTeam} />
+  //         ))
+  //       ) : (
+  //         <p>You are not part of any team.</p>
+  //       )}
+  //     </div>
+  //   </div>
+  // );
   return (
     <div className="dashboard">
       <h1>Welcome to your Dashboard, {user?.email}</h1>
-      <button onClick={handleSignOut}>Sign Out</button>
-      <button onClick={handleCreateTeam}>Create Team</button>
-
+      <div className="button-container">
+        <button onClick={handleSignOut}>Sign Out</button>
+        <button onClick={handleCreateTeam}>Create Team</button>
+      </div>
+  
       <div className="team-cards-container">
         {teams.length > 0 ? (
           teams.map((team) => (

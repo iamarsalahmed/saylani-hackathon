@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { db, collection, getDocs, addDoc, auth } from '../(database)/firebase-config';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
+import  './styles.css'; // Import the CSS module
 
 const CreateTeam = () => {
   const [teamName, setTeamName] = useState('');
@@ -23,11 +24,11 @@ const CreateTeam = () => {
     fetchUsers();
   }, []);
 
-  const handleUserSelection = (userId) => {
+  const handleUserSelection = (userId, userName) => {
     setSelectedUsers(prev =>
-      prev.includes(userId)
-        ? prev.filter(id => id !== userId)
-        : [...prev, userId]
+      prev.some(user => user.userId === userId)
+        ? prev.filter(user => user.userId !== userId) // Remove if already selected
+        : [...prev, { userId, name: userName }] // Add new user with userId and name
     );
   };
 
@@ -40,7 +41,7 @@ const CreateTeam = () => {
       return;
     }
 
-    console.log('Selected User IDs:', selectedUsers); // Log selected user IDs
+    console.log('Selected User IDs:', selectedUsers);
 
     try {
       const currentUserId = auth.currentUser.uid;
@@ -49,7 +50,7 @@ const CreateTeam = () => {
       const teamsCollection = collection(db, 'teams');
       await addDoc(teamsCollection, {
         teamName,
-        members: [...selectedUsers, currentUserId], // Ensure these are user IDs
+        members: [...selectedUsers.map(user => user.userId), currentUserId],
         teamLeader: currentUserId,
       });
       
@@ -69,7 +70,7 @@ const CreateTeam = () => {
   };
 
   return (
-    <div>
+    <div className="create-team-container">
       <h1>Create Team</h1>
       <input
         type="text"
@@ -78,18 +79,16 @@ const CreateTeam = () => {
         onChange={(e) => setTeamName(e.target.value)}
       />
       <h2>Select Users to Add to the Team</h2>
-      <div>
+      <div className='map'>
         {allUsers.map(user => (
           <div key={user.id}>
             <label>
               <input
                 type="checkbox"
-                checked={selectedUsers.includes(user.userId)} // Ensure this corresponds to the userId
-                onChange={() => handleUserSelection(user.userId)} // Change to user.id
+                checked={selectedUsers.some(selected => selected.userId === user.userId)} 
+                onChange={() => handleUserSelection(user.userId, user.name)}
               />
-              {/* {console.log(user, "users")} */}
               {user.name} ({user.email})
-              {console.log(user, 'map data')}
             </label>
           </div>
         ))}
@@ -97,6 +96,7 @@ const CreateTeam = () => {
       <button onClick={handleCreateTeam}>Create Team</button>
     </div>
   );
+  
 };
 
 export default CreateTeam;

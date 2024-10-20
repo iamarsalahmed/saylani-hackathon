@@ -4,6 +4,7 @@ import { auth, db, collection, addDoc, createUserWithEmailAndPassword } from '..
 import '../globals.css';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
+import  './styles.css'; 
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -46,17 +47,26 @@ const SignUp = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Sign Up Page</h1>
-      <label htmlFor="name">Name</label>
-      <input onChange={(e) => setName(e.target.value)} type="text" name="name" id="name" />
-      <label htmlFor="email">Email</label>
-      <input onChange={(e) => setEmail(e.target.value)} type="email" name="email" id="email" />
-      <label htmlFor="password">Password</label>
-      <input onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" />
-      {loading ? <div>Loading...</div> : <button type="submit">Sign Up</button>}
-    </form>
-  );
+    <div className="signup-container">
+        <form onSubmit={handleSubmit}>
+            <h1>Sign Up Page</h1>
+            <label htmlFor="name">Name</label>
+            <input onChange={(e) => setName(e.target.value)} type="text" className="input" name="name" id="name" />
+            
+            <label htmlFor="email">Email</label>
+            <input onChange={(e) => setEmail(e.target.value)} type="email" className="input" name="email" id="email" />
+            
+            <label htmlFor="password">Password</label>
+            <input onChange={(e) => setPassword(e.target.value)} type="password" className="input" name="password" id="password" />
+            
+            {loading ? (
+                <div className="loading">Loading...</div>
+            ) : (
+                <button type="submit">Sign Up</button>
+            )}
+        </form>
+    </div>
+);
 };
 
 export default SignUp;

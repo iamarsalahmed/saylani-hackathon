@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import {  auth,signInWithEmailAndPassword,getDocs,collection,db, doc, getDoc  } from '../(database)/firebase-config';
 import { useRouter } from 'next/navigation'
-import '../globals.css';
+// import '../globals.css';
 import Swal from 'sweetalert2'
-
+import  './styles.css'; // Import the CSS module
 const SignIn = () => {
     const router = useRouter()
   const [name, setName] = useState('');
@@ -55,31 +55,45 @@ const SignIn = () => {
     }
   };
   
-
   return (
-    <>
+    <div className="signin-container">
       <form onSubmit={handleSubmit}>
-        <br />
         <h1>Sign In Page</h1>
 
         <label htmlFor="name">Name</label>
-        <input onChange={(e) => setName(e.target.value)} type="text" className="input" name="name" id="name" />
-        <br />
-
+        <input 
+          onChange={(e) => setName(e.target.value)} 
+          type="text" 
+          className="input" 
+          name="name" 
+          id="name" 
+        />
+        
         <label htmlFor="email">Email</label>
-        <input onChange={(e) => setEmail(e.target.value)} type="email" className="input" name="email" id="email" />
-        <br />
-
+        <input 
+          onChange={(e) => setEmail(e.target.value)} 
+          type="email" 
+          className="input" 
+          name="email" 
+          id="email" 
+        />
+        
         <label htmlFor="password">Password</label>
-        <input onChange={(e) => setPassword(e.target.value)} type="password" className="input" name="password" id="password" />
-        <br />
+        <input 
+          onChange={(e) => setPassword(e.target.value)} 
+          type="password" 
+          className="input" 
+          name="password" 
+          id="password" 
+        />
+        
         {loading ? (
-          <div>Loading...</div>
+          <div className="loading">Loading...</div>
         ) : (
-          <button type="submit">Sign up</button>
+          <button type="submit">Sign In</button>
         )}
       </form>
-    </>
+    </div>
   );
 };
 

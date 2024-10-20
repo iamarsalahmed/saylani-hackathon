@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db, doc, getDoc, updateDoc, deleteDoc } from '../(database)/firebase-config'; // Import Firestore functions
 import Swal from 'sweetalert2';
-
+import  './styles.css'; // Import the CSS module
 const TeamCard = ({ team, userId, onDelete }) => {
   const [memberNames, setMemberNames] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
