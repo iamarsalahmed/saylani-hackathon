@@ -93,6 +93,7 @@ div {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 250px; /* Adjust width as necessary */
+
   transition: transform 0.2s;
 }
 
@@ -350,7 +351,6 @@ input[type="checkbox"] {
   overflow-y: auto;
   margin-bottom: 20px;
   padding-right: 5px; /* To give space when scrolling */
-*/
 
 button {
   width: 100%;
