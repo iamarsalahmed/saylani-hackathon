@@ -25,49 +25,52 @@ const CreateTeam = () => {
   }, []);
 
   const handleUserSelection = (userId, userName) => {
-    setSelectedUsers(prev =>
-      prev.some(user => user.userId === userId)
-        ? prev.filter(user => user.userId !== userId) // Remove if already selected
-        : [...prev, { userId, name: userName }] // Add new user with userId and name
-    );
+    console.log("User Selected:", { userId, userName }); // Log the inputs
+  
+    setSelectedUsers(prev => {
+      const isSelected = prev.some(user => user.userId === userId);
+      return isSelected
+        ? prev.filter(user => user.userId !== userId) // Remove user if selected
+        : [...prev, { userId, name: userName }]; // Add user if not selected
+    });
   };
+  
+ const handleCreateTeam = async () => {
+  if (!teamName || selectedUsers.length === 0) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Please provide a team name and select at least one user',
+    });
+    return;
+  }
 
-  const handleCreateTeam = async () => {
-    if (!teamName || selectedUsers.length === 0) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Please provide a team name and select at least one user',
-      });
-      return;
-    }
+  console.log('Selected Users:', selectedUsers); // Log the selected users with userId and name
 
-    console.log('Selected User IDs:', selectedUsers);
+  try {
+    const currentUserId = auth.currentUser.uid;
 
-    try {
-      const currentUserId = auth.currentUser.uid;
+    // Add the new team to Firestore, including both userId and name for each selected user
+    const teamsCollection = collection(db, 'teams');
+    await addDoc(teamsCollection, {
+      teamName,
+      members: [...selectedUsers, { userId: currentUserId, name: "Team Leader" }], // Store the full objects of selected users, including userId and name
+      teamLeader: currentUserId, // You can store the leader as userId separately if needed
+    });
 
-      // Add the new team to Firestore
-      const teamsCollection = collection(db, 'teams');
-      await addDoc(teamsCollection, {
-        teamName,
-        members: [...selectedUsers.map(user => user.userId), currentUserId],
-        teamLeader: currentUserId,
-      });
-      
-      Swal.fire({
-        title: 'Team Created Successfully!',
-        icon: 'success',
-      });
+    Swal.fire({
+      title: 'Team Created Successfully!',
+      icon: 'success',
+    });
 
-      router.push('/dashboard'); // Redirect to Dashboard after creation
-    } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error creating team',
-        text: error.message,
-      });
-    }
-  };
+    router.push('/dashboard'); // Redirect to Dashboard after creation
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error creating team',
+      text: error.message,
+    });
+  }
+};
 
   return (
     <div className="create-team-container">

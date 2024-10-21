@@ -1,109 +1,125 @@
 /* globals.css */
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .create-team-container label {
-    display: block; /* Make labels block elements for better spacing */
-    margin: 10px 0; /* Add some margin between each label */
-    padding-left: 10px; /* Add left padding for alignment */
-  }
-  .create-team-container {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-     /* Make it fill the viewport height */
-    margin-top: 5%;
-    margin-bottom: 5%; /* Add padding to the top for spacing */
-    margin-left: 20%; /* Add left margin */
-    margin-right: 20%; /* Add right margin */
-    background: white;
-    border: 1px solid #ddd; /* Add a light gray border */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* More pronounced box shadow */
-    padding: 20px; /* Internal padding for the content */
-  }
-  
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.create-team-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 5% auto; /* Center the container */
+  width: 90%; /* Full width with margins for mobile */
+  max-width: 600px; /* Set a max width for larger screens */
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center; /* Center the title */
+  margin-bottom: 20px; /* Space below the title */
+}
+
+h2 {
+  margin: 10px 0;
+  color: #555;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px; /* Slightly larger text */
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+}
+
+.user-list {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding-right: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+.map {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.team-card {
+  width: 100%; /* Full width on mobile */
+  max-width: 300px; /* Limit width for larger screens */
+  padding: 20px;
+  margin: 10px auto; /* Center cards on mobile */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  background-color: #fff; /* Add background color */
+}
+
+.team-card ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 0;
+  list-style-type: none;
+}
+
+.team-card li {
+  padding: 5px 0;
+  text-align: left; /* Align text to the left */
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 600px) {
   h1 {
-    font-size: 2.5rem; /* Increased font size */
-    font-weight: bold; /* Made the text bold */
+      font-size: 2rem; /* Smaller font size on mobile */
   }
   
-  h2 {
-    margin: 10px 0;
-    color: #555;
+  .create-team-container {
+      padding: 15px; /* Less padding on mobile */
   }
-  
-  input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  input[type="checkbox"] {
-    margin-right: 10px;
-  }
-  
-  .label {
-    display: flex;
-    align-items: center;
-  }
-  
-  .user-list {
-    max-height: 150px;
-    overflow-y: auto;
-    margin-bottom: 20px;
-    padding-right: 5px; /* To give space when scrolling */
-  }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button:hover {
-    background-color: #218838;
-  }
-  .map {
-    display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: flex-start; /* Left align the items */
-    padding-left: 20px; /* Add padding on the left */
-    margin-top: 10px; /* Optional: Add margin on top for spacing */
-  }
+
   .team-card {
-    width: 300px; /* Set a fixed width for the card */
-    padding: 20px; /* Add some padding inside the card */
-    margin: 10px; /* Add space between cards */
-    border: 1px solid #ccc; /* Optional: border around the card */
-    border-radius: 5px; /* Optional: rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: shadow for depth */
-    display: flex; /* Flexbox for layout */
-    flex-direction: column; /* Stack items vertically */
+      width: 90%; /* Full width on mobile */
+      max-width: none; /* Remove max width */
   }
-  
-  .team-card ul {
-    display: grid; /* Use grid for two columns */
-    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
-    padding: 0; /* Remove default padding */
-    list-style-type: none; /* Remove default bullet points */
-  }
-  
-  .team-card li {
-    padding: 5px 0; /* Space between items */
-  }
-  
+}

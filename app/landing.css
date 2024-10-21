@@ -1,0 +1,67 @@
+/* landing.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e7f0f7; /* Light blue background */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full viewport height */
+    padding: 20px;
+}
+
+.content {
+    text-align: center;
+    background-color: white; /* White background for content */
+    padding: 50px; /* Increased padding for larger box */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    max-width: 600px; /* Set a maximum width for the content box */
+    width: 100%; /* Make it responsive */
+}
+
+h1 {
+    font-size: 2.5rem; /* Large heading */
+    color: #007bff; /* Blue color */
+    margin-bottom: 10px;
+}
+
+p {
+    color: #555; /* Dark gray text */
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center; /* Center the buttons */
+    gap: 15px; /* Space between buttons */
+}
+
+button {
+    padding: 10px 20px; /* Padding for the buttons */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer;
+    font-size: 16px; /* Font size */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.loginButton {
+    background-color: #007bff; /* Blue color */
+    color: white;
+}
+
+.signupButton {
+    background-color: #28a745; /* Green color */
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9; /* Slightly transparent on hover */
+}

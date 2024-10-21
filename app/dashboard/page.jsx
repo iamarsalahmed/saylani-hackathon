@@ -112,12 +112,12 @@ const Dashboard = () => {
   const fetchUserTeams = async (userId) => {
     try {
       const teamsRef = collection(db, 'teams');
-      const teamSnapshot = await getDocs(teamsRef); // Fetch all teams
+      const teamSnapshot = await getDocs(teamsRef);
   
       // Check if any teams were fetched
       if (teamSnapshot.empty) {
         console.log('No teams found in the database.');
-        setTeams([]); // Set teams to an empty array if no teams exist
+        setTeams([]);
         return;
       }
   
@@ -125,12 +125,13 @@ const Dashboard = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      
+  
       console.log('Fetched Teams:', fetchedTeams);
   
       // Filter teams to include only those where the user is a member
       const userTeams = fetchedTeams.filter(team => {
-        const isMember = team.members.includes(userId);
+        // Check if the userId is present in the members array
+        const isMember = team.members.some(member => member.userId === userId);
         if (isMember) {
           console.log(`User ${userId} is a member of team ${team.teamName}`);
         } else {
@@ -139,13 +140,13 @@ const Dashboard = () => {
         return isMember;
       });
   
-      console.log('User Teams:', userTeams); // Debugging line to check fetched teams
-      setTeams(userTeams); // Set only the teams that include the user
+      console.log('User Teams:', userTeams);
+      setTeams(userTeams);
     } catch (error) {
       console.error('Error fetching user teams:', error);
-      // Optionally, you can show an alert or message to the user here
     }
   };
+  
   
   const handleDeleteTeam = (teamId) => {
     setTeams(prevTeams => prevTeams.filter(team => team.id !== teamId)); // Remove team from state
