@@ -1,42 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { db, doc, updateDoc, deleteDoc, getDoc } from '../(database)/firebase-config'; // Import Firestore functions
+import { db, doc, updateDoc, deleteDoc, getDoc } from '../(database)/firebase-config';
 import Swal from 'sweetalert2';
-import './styles.css'; // Import the CSS module
+import './styles.css';
 
 const TeamCard = ({ team, userId, onDelete }) => {
-  const [memberNames, setMemberNames] = useState([]); // State for member names
+  const [memberNames, setMemberNames] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [newTeamName, setNewTeamName] = useState(team.teamName);
-  const [selectedMembers, setSelectedMembers] = useState(team.members); // Initialize with current team members
+  const [selectedMembers, setSelectedMembers] = useState(team.members);
 
   useEffect(() => {
     const fetchMemberNames = async () => {
       if (!Array.isArray(team.members)) {
         console.error("Expected team.members to be an array");
-        return; // Exit if it's not an array
+        return;
       }
 
       const namePromises = team.members.map(async (memberId) => {
         if (typeof memberId !== 'string') {
           console.error(`Expected memberId to be a string, got: ${typeof memberId}`);
-          return { userId: memberId, name: 'Unknown Member' }; // Fallback for invalid memberId
+          return { userId: memberId, name: 'Unknown Member' };
         }
 
         const memberDoc = await getDoc(doc(db, 'user', memberId));
         return memberDoc.exists()
           ? { userId: memberId, name: memberDoc.data().name }
-          : { userId: memberId, name: 'Unknown Member' }; // Fallback if user doesn't exist
+          : { userId: memberId, name: 'Unknown Member' };
       });
 
       const names = await Promise.all(namePromises);
       setMemberNames(names);
-      setSelectedMembers(team.members); // Initialize selected members for editing
+      setSelectedMembers(team.members);
     };
 
     fetchMemberNames();
   }, [team.members]);
 
-  // Determine role of the user (leader or member)
   const isLeader = team.teamLeader === userId;
   const role = isLeader 
     ? 'Team Leader' 
@@ -57,13 +56,13 @@ const TeamCard = ({ team, userId, onDelete }) => {
       const teamRef = doc(db, 'teams', team.id);
       await updateDoc(teamRef, {
         teamName: newTeamName,
-        members: selectedMembers, // Update the team members
+        members: selectedMembers,
       });
       Swal.fire({
         title: 'Team Updated Successfully!',
         icon: 'success',
       });
-      setIsEditing(false); // Exit editing mode
+      setIsEditing(false);
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -86,7 +85,7 @@ const TeamCard = ({ team, userId, onDelete }) => {
     if (confirmDelete.isConfirmed) {
       try {
         await deleteDoc(doc(db, 'teams', team.id));
-        onDelete(team.id); // Call onDelete prop to remove the card from the dashboard
+        onDelete(team.id);
         Swal.fire('Deleted!', 'Your team has been deleted.', 'success');
       } catch (error) {
         Swal.fire('Error!', error.message, 'error');
@@ -101,7 +100,7 @@ const TeamCard = ({ team, userId, onDelete }) => {
       <h4>Members:</h4>
       <ul>
         {selectedMembers.map(member => (
-          <li key={member.userId}>{member.name}</li> // Display names directly
+          <li key={member.userId}>{member.name}</li>
         ))}
       </ul>
 
@@ -109,28 +108,27 @@ const TeamCard = ({ team, userId, onDelete }) => {
       <button onClick={handleDelete}>Delete</button>
 
       {isEditing && (
-  <div>
-    <h4>Select Members:</h4>
-    {team.members.map(member => (
-      <div key={member.userId}>
-        <label>
-          <input
-            type="checkbox"
-            checked={selectedMembers.some(selected => selected.userId === member.userId)}
-            onChange={() => setSelectedMembers(prev =>
-              prev.some(selected => selected.userId === member.userId)
-                ? prev.filter(selected => selected.userId !== member.userId) // Deselect member
-                : [...prev, member] // Add member (use the entire member object)
-            )}
-          />
-          {member.name} {/* Directly use the name from the member object */}
-        </label>
-      </div>
-    ))}
-    <button onClick={handleEdit}>Update Team</button>
-  </div>
-)}
-
+        <div>
+          <h4>Select Members:</h4>
+          {team.members.map(member => (
+            <div key={member.userId}>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={selectedMembers.some(selected => selected.userId === member.userId)}
+                  onChange={() => setSelectedMembers(prev =>
+                    prev.some(selected => selected.userId === member.userId)
+                      ? prev.filter(selected => selected.userId !== member.userId)
+                      : [...prev, member]
+                  )}
+                />
+                {member.name}
+              </label>
+            </div>
+          ))}
+          <button onClick={handleEdit}>Update Team</button>
+        </div>
+      )}
     </div>
   );
 };

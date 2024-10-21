@@ -1,12 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import { auth, signInWithEmailAndPassword, getDocs, collection, db, doc, getDoc } from '../(database)/firebase-config';
-import { useRouter } from 'next/navigation'
-// import '../globals.css';
-import Swal from 'sweetalert2'
-import './styles.css'; // Import the CSS module
+import { useRouter } from 'next/navigation';
+import Swal from 'sweetalert2';
+import './styles.css';
+
 const SignIn = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,31 +20,16 @@ const SignIn = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Fetch user's document directly
       const userDocRef = doc(db, 'user', user.uid);
       const userDoc = await getDoc(userDocRef);
 
-      // Check if the document exists
-      // if (userDoc.exists()) {
-      //   const userData = userDoc.data(); // Get the document data
-      //   if (userData.teamId) {
-      //     console.log(`User belongs to team: ${userData.teamId}`);
-      //   } else {
-      //     console.log("User does not belong to any team yet.");
-      //   }
-      // } else {
-      //   console.log("User document does not exist.");
-      // }
-      // Handle the team membership check
       if (userDoc.exists()) {
-        const userData = userDoc.data(); // Get the document data
+        const userData = userDoc.data();
         console.log('User Data:', userData);
 
-        // Assuming userData has a teamId and your team structure allows you to find the team based on the teamId
         if (userData.teamId) {
           console.log(`User belongs to team: ${userData.teamId}`);
 
-          // Further logic can be added to fetch the team's members if needed
           const teamDocRef = doc(db, 'teams', userData.teamId);
           const teamDoc = await getDoc(teamDocRef);
 
@@ -52,7 +37,7 @@ const SignIn = () => {
             const teamData = teamDoc.data();
 
             const isPartOfTeam = teamData.members.some(member => member.userId === user.uid);
-            console.log(teamData, 'team data')
+            console.log(teamData, 'team data');
             if (isPartOfTeam) {
               console.log("User is part of the team.");
             } else {
@@ -67,7 +52,6 @@ const SignIn = () => {
       } else {
         console.log("User document does not exist.");
       }
-
 
       setLoading(false);
       await Swal.fire({

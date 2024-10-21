@@ -1,10 +1,8 @@
-/* landing.css */
-
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #e7f0f7; /* Light blue background */
+    background-color: #e7f0f7;
 }
 
 .container {
@@ -12,56 +10,56 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
     padding: 20px;
 }
 
 .content {
     text-align: center;
-    background-color: white; /* White background for content */
-    padding: 50px; /* Increased padding for larger box */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
-    max-width: 600px; /* Set a maximum width for the content box */
-    width: 100%; /* Make it responsive */
+    background-color: white;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
 }
 
 h1 {
-    font-size: 2.5rem; /* Large heading */
-    color: #007bff; /* Blue color */
+    font-size: 2.5rem;
+    color: #007bff;
     margin-bottom: 10px;
 }
 
 p {
-    color: #555; /* Dark gray text */
+    color: #555;
     margin-bottom: 20px;
 }
 
 .buttons {
     display: flex;
-    justify-content: center; /* Center the buttons */
-    gap: 15px; /* Space between buttons */
+    justify-content: center;
+    gap: 15px;
 }
 
 button {
-    padding: 10px 20px; /* Padding for the buttons */
+    padding: 10px 20px;
     border: none;
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px; /* Font size */
-    transition: background-color 0.3s; /* Smooth transition */
+    font-size: 16px;
+    transition: background-color 0.3s;
 }
 
 .loginButton {
-    background-color: #007bff; /* Blue color */
+    background-color: #007bff;
     color: white;
 }
 
 .signupButton {
-    background-color: #28a745; /* Green color */
+    background-color: #28a745;
     color: white;
 }
 
 button:hover {
-    opacity: 0.9; /* Slightly transparent on hover */
+    opacity: 0.9;
 }
